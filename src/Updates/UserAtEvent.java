@@ -1,7 +1,6 @@
 package Updates;
 
-import Updates.Event;
-import Updates.UserUpdates;
+import Events.Event;
 import Users.RegularUsers.RegularUser;
 
 public class UserAtEvent {

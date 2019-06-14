@@ -14,6 +14,7 @@ public abstract class RegisteredUser {
     protected String mailAddress;
     protected String password;
     protected Organization organization;
+    protected UserStatus status;
 
     public RegisteredUser(ChangePasswordController changePasswordController, String username, String mailAddress, String password, Organization organization) {
         this.changePasswordController = changePasswordController;
@@ -21,6 +22,7 @@ public abstract class RegisteredUser {
         this.mailAddress = mailAddress;
         this.password = password;
         this.organization = organization;
+        this.status = UserStatus.Active;
     }
 
     public String getUsername() {

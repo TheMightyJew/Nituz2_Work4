@@ -1,5 +1,6 @@
 package Organizations;
 
+import Events.OrganizationAtEvent;
 import Organizations.SecurityForces.SecurityForce;
 import Users.Admins.Admin;
 import Users.RegularUsers.RegularUser;
@@ -14,19 +15,21 @@ public abstract class Organization {
     protected List<RegularUser> users;
     protected List<OrganizationAtEvent> events;
 
-    public Organization(String id) {
+    public Organization(String id, Admin admin) {
         this.id = id;
+        this.admin = admin;
         users = new ArrayList<>();
         events = new ArrayList<>();
     }
 
     public static boolean isSameOrganization(Organization o1, Organization o2){
-        if(o1 instanceof SecurityForce && o2 instanceof SecurityForce)
+        /*if(o1 instanceof SecurityForce && o2 instanceof SecurityForce)
             return true;
         else if(o1 instanceof EmergencyCenter && o2 instanceof EmergencyCenter)
             return true;
         else
-            return false;
+            return false;*/
+        return o1.getClass().equals(o2.getClass());
     }
 
     public List<RegularUser> getUsers(){

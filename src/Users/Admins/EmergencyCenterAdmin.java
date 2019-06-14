@@ -1,6 +1,6 @@
 package Users.Admins;
 
-import Controllers.Category;
+import Categories.Category;
 import Controllers.ChangePasswordController;
 import Controllers.CreateCategoryController;
 import Controllers.CreateEventController;
