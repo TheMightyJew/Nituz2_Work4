@@ -1,3 +1,5 @@
+import Updates.Event;
+
 import java.util.*;
 
 public class Category {

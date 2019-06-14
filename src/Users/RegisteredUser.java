@@ -1,5 +1,6 @@
 package Users;
 
+import Controllers.ChangePasswordController;
 import Organizations.Organization;
 
 public abstract class RegisteredUser {
@@ -8,15 +9,18 @@ public abstract class RegisteredUser {
         Active,Passive,Blocked;
     }
 
+    protected ChangePasswordController changePasswordController;
     protected String username;
     protected String mailAddress;
     protected String password;
     protected Organization organization;
 
-    public RegisteredUser(String username, String mailAddress, String password) {
+    public RegisteredUser(ChangePasswordController changePasswordController, String username, String mailAddress, String password, Organization organization) {
+        this.changePasswordController = changePasswordController;
         this.username = username;
         this.mailAddress = mailAddress;
         this.password = password;
+        this.organization = organization;
     }
 
     public String getUsername() {

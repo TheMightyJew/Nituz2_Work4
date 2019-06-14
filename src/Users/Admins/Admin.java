@@ -1,9 +1,14 @@
 package Users.Admins;
 
+import Controllers.ChangePasswordController;
+import Controllers.CreateCategoryController;
+import Organizations.Organization;
 import Users.RegisteredUser;
 
 public abstract class Admin extends RegisteredUser {
-    public Admin(String username, String mailAddress, String password) {
-        super(username, mailAddress, password);
+
+
+    public Admin(ChangePasswordController changePasswordController, String username, String mailAddress, String password, Organization organization) {
+        super(changePasswordController, username, mailAddress, password, organization);
     }
 }
