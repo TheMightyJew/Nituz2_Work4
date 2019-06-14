@@ -1,5 +1,7 @@
 package Updates;
 
+import Events.Event;
+
 public class Update {
 
     private Event event;

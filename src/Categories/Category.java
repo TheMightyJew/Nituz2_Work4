@@ -1,6 +1,6 @@
-package Controllers;
+package Categories;
 
-import Updates.Event;
+import Events.Event;
 
 import java.util.*;
 
