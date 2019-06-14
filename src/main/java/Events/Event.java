@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Event {
 
-    enum EventStatus{
+    public enum EventStatus{
         InProgress,Done;
     }
 
@@ -12,4 +12,15 @@ public class Event {
     private Date publishTime;
     private EventStatus status;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getPublishTime() {
+        return publishTime;
+    }
+
+    public EventStatus getStatus() {
+        return status;
+    }
 }

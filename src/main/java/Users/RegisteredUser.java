@@ -5,7 +5,7 @@ import Organizations.Organization;
 
 public abstract class RegisteredUser {
 
-    enum UserStatus{
+    public enum UserStatus{
         Active,Passive,Blocked;
     }
 
