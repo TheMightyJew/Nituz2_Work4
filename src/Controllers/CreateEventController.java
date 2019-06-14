@@ -1,11 +1,15 @@
 package Controllers;
 
+import Updates.UpdateData;
+import Users.Admins.EmergencyCenterAdmin;
+import Users.RegularUsers.SecurityForceUser;
+
 import java.util.Date;
 import java.util.List;
 
 public class CreateEventController extends Controller {
 
-    public boolean createNewEvent(String username, Date date, String x1, String x2, List<String> x3, String x4){
+    public boolean createNewEvent(EmergencyCenterAdmin admin, Date date, String title, UpdateData updateData, List<Category> categories, SecurityForceUser securityForceUser){
         // TODO: 14-Jun-19
         return false;
     }
