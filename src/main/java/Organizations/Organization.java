@@ -18,8 +18,8 @@ public abstract class Organization {
     public Organization(String id, Admin admin) {
         this.id = id;
         this.admin = admin;
-        users = new ArrayList<>();
-        events = new ArrayList<>();
+        users = new ArrayList<RegularUser>();
+        events = new ArrayList<OrganizationAtEvent>();
     }
 
     public static boolean isSameOrganization(Organization o1, Organization o2){

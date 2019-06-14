@@ -12,7 +12,7 @@ public class Category {
 
     public Category(String name) {
         this.name = name;
-        events = new ArrayList<>();
+        events = new ArrayList<Event>();
         categories.put(name,this);
     }
 
@@ -44,7 +44,7 @@ public class Category {
     }
 
     public static List<Category> getCategories(){
-        return new ArrayList<>(categories.values());
+        return new ArrayList<Category>(categories.values());
     }
 
 

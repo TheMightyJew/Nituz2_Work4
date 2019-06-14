@@ -10,7 +10,7 @@ public class UserUpdates {
 
     public UserUpdates(UserAtEvent user) {
         this.user = user;
-        updates = new ArrayList<>();
+        updates = new ArrayList<Update>();
     }
 
     public UserAtEvent getUser() {
