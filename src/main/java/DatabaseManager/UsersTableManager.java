@@ -15,6 +15,6 @@ public class UsersTableManager extends DatabaseController {
     }
 
     public List<RegisteredUser> getAllUsers(){
-
+        return null;
     }
 }

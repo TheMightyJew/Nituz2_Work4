@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ViewController">
    <children>
             <GridPane fx:id="userDetails" prefHeight="32.0" prefWidth="600.0">
                 <columnConstraints>
@@ -36,7 +36,7 @@
             <Label fx:id="helloUsername" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                 </children>
             </GridPane>
-      <TabPane layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
           <tabs>
               <Tab fx:id="loginTab" closable="false" text="Login">
                   <content>
@@ -100,12 +100,12 @@
                   </AnchorPane>
                   </content>
               </Tab>
-            <Tab text="My Events">
+            <Tab fx:id="myEventsTab" text="My Events">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Change Password">
+            <Tab fx:id="passwordTab" text="Change Password">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
