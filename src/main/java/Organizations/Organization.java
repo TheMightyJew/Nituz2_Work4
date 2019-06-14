@@ -1,7 +1,6 @@
 package Organizations;
 
 import Events.OrganizationAtEvent;
-import Organizations.SecurityForces.SecurityForce;
 import Users.Admins.Admin;
 import Users.RegularUsers.RegularUser;
 
