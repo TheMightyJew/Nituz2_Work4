@@ -13,10 +13,15 @@ import Users.RegularUsers.SecurityForceUser;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -111,7 +116,7 @@ public class ViewController implements Initializable {
 
         initialUpdate.setCellFactory(cellFactoryInitial);
         lastUpdate.setCellFactory(cellFactoryLast);
-        lastUpdate.setCellFactory(cellFactoryNew);
+        newUpdate.setCellFactory(cellFactoryNew);
 
         eventsTable.getColumns().addAll(eventTitle, eventDate, eventStatus , initialUpdate , lastUpdate , newUpdate);
         eventsTable.setPrefWidth(eventsTable.getColumns().size()*150);
@@ -134,7 +139,31 @@ public class ViewController implements Initializable {
                             setText(null);
                         } else {
                             // TODO: 15-Jun-19 problem with lamda fucntion
+                            try{
+                                btn.setOnAction(event -> {
+                                    try {
+                                        FXMLLoader fxmlLoader = new FXMLLoader();
+                                        //primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("vacationPic2.jpg")));
+                                        // TODO: 15-Jun-19 fix bug with path 
+                                        Parent root = fxmlLoader.load(getClass().getResource("NewUpdate.fxml").openStream());
+                                        NewUpdateController controller = fxmlLoader.getController();
+                                        /*Model model = new Model();
+                                        viewController.setModel(model);*/
+                                        Stage stage = new Stage();
+                                        stage.initModality(Modality.APPLICATION_MODAL);
+                                        stage.setTitle("New Update");
+                                        stage.setScene(new Scene(root));
+                                        stage.show();
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                });
 
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
                             setGraphic(btn);
                             setText(null);
                         }
