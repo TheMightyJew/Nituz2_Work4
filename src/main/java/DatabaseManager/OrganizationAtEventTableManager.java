@@ -68,4 +68,20 @@ public class OrganizationAtEventTableManager extends DatabaseController {
         disconnect();
         return organizationAtEvents;
     }
+
+    public void CreateOrganizationAtEvent(OrganizationAtEvent organizationAtEvent){
+        connect();
+        String sql = "INSERT INTO Organization_At_Event (Organization_Name, Event_Title, In_Charge) VALUES (?,?,?)";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, organizationAtEvent.getOrganization().getId());
+            pstmt.setString(2, organizationAtEvent.getEvent().getTitle());
+            pstmt.setString(3, organizationAtEvent.getInCharge().getUser().getUsername());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        disconnect();
+    }
 }

@@ -1,5 +1,6 @@
 package Events;
 
+import Categories.Category;
 import Organizations.Organization;
 import Organizations.SecurityForces.SecurityForce;
 import Updates.Update;
@@ -24,9 +25,9 @@ public class Event {
     private List<UserAtEvent> users;
     private List<OrganizationAtEvent> organizations;
     private Map<Organization,UserAtEvent> organizationsAdmins;
+    private List<Category> categories;
 
-
-    public Event(EmergencyCenterAdmin admin, String title, Update initialUpdate, SecurityForceUser user) {
+    public Event(EmergencyCenterAdmin admin, String title, Update initialUpdate, SecurityForceUser user, List<Category> categories) {
         this.admin = admin;
         this.title = title;
         this.initialUpdate = initialUpdate;
@@ -37,6 +38,7 @@ public class Event {
         organizations = new ArrayList<OrganizationAtEvent>();
         organizationsAdmins = new HashMap<Organization, UserAtEvent>();
         addUser(user);
+        this.categories = categories;
 
     }
 
@@ -47,7 +49,7 @@ public class Event {
         if(organization instanceof SecurityForce){
             if(organizationsAdmins.containsKey(organization)==false){
                 organizationsAdmins.put(organization,userAtEvent);
-                OrganizationAtEvent organizationAtEvent = new OrganizationAtEvent(organization,this);
+                OrganizationAtEvent organizationAtEvent = new OrganizationAtEvent(organization,this, userAtEvent);
                 organizations.add(organizationAtEvent);
             }
         }
@@ -95,5 +97,13 @@ public class Event {
 
     public void setLastUpdate(Update lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

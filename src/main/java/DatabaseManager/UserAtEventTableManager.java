@@ -3,6 +3,7 @@ package DatabaseManager;
 import DatabaseManager.Factories.UserAtEventFactory;
 import Updates.UserAtEvent;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,5 +43,21 @@ public class UserAtEventTableManager extends DatabaseController {
 
         disconnect();
         return userAtEvents;
+    }
+
+    public void CreateUserAtEvent(UserAtEvent userAtEvent){
+        connect();
+        String sql = "INSERT INTO User_At_Event (Regular_User_Username, Event_Title, User_Updates) VALUES (?,?,?,?)";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userAtEvent.getUser().getUsername());
+            pstmt.setString(2, userAtEvent.getEvent().getTitle());
+            pstmt.setInt(3, userAtEvent.getUpdates().getID());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        disconnect();
     }
 }

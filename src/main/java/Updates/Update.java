@@ -5,6 +5,7 @@ import Events.Event;
 public class Update {
 
     //private Event event;
+    private int ID;
     private Update previous;
     private Update next;
     private UpdateData data;
@@ -40,5 +41,13 @@ public class Update {
 
     public void setData(UpdateData data) {
         this.data = data;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

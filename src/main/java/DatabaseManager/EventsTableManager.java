@@ -3,6 +3,9 @@ package DatabaseManager;
 import Categories.Category;
 import DatabaseManager.Factories.EventsFactory;
 import Events.Event;
+import Events.OrganizationAtEvent;
+import Updates.UserAtEvent;
+import Updates.UserUpdates;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,8 +51,7 @@ public class EventsTableManager extends DatabaseController{
     }
 
     public void CreateANewEvent(Event event) {
-        // TODO: 6/15/2019 create the initial update
-        int updateID = 0;
+        int updateID = UpdatesTableManager.getInstance().CreateANewUpdate(event.getInitialUpdate());
 
         connect();
         String sql = "INSERT INTO Events (Title, Publish_Time, Status ,First_Update) VALUES (?,?,?,?)";
@@ -66,8 +68,18 @@ public class EventsTableManager extends DatabaseController{
         }
         disconnect();
 
-        // TODO: 6/15/2019 create the user_at_event and organization_at_event
-        // TODO: 6/15/2019 add the category to the category list of the event
+        UserAtEvent creator = event.getUsers().get(0);
+        //create the user_Updates
+        UserUpdates userUpdates = creator.getUpdates();
+        UserUpdatesTableManager.getInstance().CreateUserUpdates(userUpdates, updateID);
+        //create the user_at_event and organization_at_event
+        UserAtEventTableManager.getInstance().CreateUserAtEvent(creator);
+        OrganizationAtEvent creators_organization = event.getOrganizations().get(0);
+        OrganizationAtEventTableManager.getInstance().CreateOrganizationAtEvent(creators_organization);
+        //add the categories to the category list of the event
+        for(Category category : event.getCategories()) {
+            RelationEventCategoryTableManager.getInstance().CreateNewRelation(event, category);
+        }
     }
 
     public Event getEventByTitleForCategory(String event_title, Category category) {

@@ -48,7 +48,7 @@ public class UpdateDataTableManager extends DatabaseController{
         return ans;
     }
 
-    public int CreateANewUpdate(UpdateData updateData){
+    public int CreateANewUpdateData(UpdateData updateData){
         int nextUpdateDataID = getNextUpdateDataID();
 
         connect();

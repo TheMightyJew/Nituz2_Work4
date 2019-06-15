@@ -58,4 +58,8 @@ public abstract class Organization {
     }
 
     public abstract String toString();
+
+    public String getId() {
+        return id;
+    }
 }

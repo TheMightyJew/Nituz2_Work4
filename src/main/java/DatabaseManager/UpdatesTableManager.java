@@ -46,9 +46,10 @@ public class UpdatesTableManager extends DatabaseController{
 
     public int CreateANewUpdate(Update update){
         int nextUpdateID = getNextUpdateID();
+        update.setID(nextUpdateID);
 
-        // TODO: 6/15/2019 create first update data
-        int firstUpdateDataID = 0;
+        //create first update data
+        int firstUpdateDataID = UpdateDataTableManager.getInstance().CreateANewUpdateData(update.getFirstData());
 
         connect();
         String sql = "INSERT INTO Update (Update_ID, First_Update_Data, Last_Update_Data, Next_For_User, Next_For_Event, User_Updates, Event_Title) VALUES (?,?,NULL,NULL,NULL,NULL,NULL)";
