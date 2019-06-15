@@ -50,6 +50,33 @@ public class EventsTableManager extends DatabaseController{
         return events;
     }
 
+    public List<Event> getAllEventsForUsername(String Username) {
+        connect();
+        String sql = "SELECT Title, Publish_Time, Status, First_Update FROM Events INNER JOIN User_At_Event ON Events.Title=User_At_Event.Event_Title WHERE User_At_Event.Regular_User_Username = ?";
+        List<Event> events = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, Username);
+            ResultSet rs = pstmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                String Title = rs.getString("Title");
+                String Publish_Time = rs.getString("Publish_Time");
+                int Status = rs.getInt("Status");
+                int First_Update = rs.getInt("First_Update");
+
+                Event curr = EventsFactory.getInstance().Build(Title, Publish_Time, Status, First_Update);
+                events.add(curr);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        disconnect();
+        return events;
+    }
+
     public void CreateANewEvent(Event event) {
         int updateID = UpdatesTableManager.getInstance().CreateANewUpdateFirstForTheEvent(event.getInitialUpdate());
 
