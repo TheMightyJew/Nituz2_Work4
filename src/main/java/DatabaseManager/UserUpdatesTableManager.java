@@ -1,15 +1,12 @@
 package DatabaseManager;
 
 import DatabaseManager.Factories.UserUpdatesFactory;
-import Updates.Update;
 import Updates.UserUpdates;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserUpdatesTableManager extends DatabaseController{
     private static UserUpdatesTableManager ourInstance = new UserUpdatesTableManager();
@@ -49,11 +46,13 @@ public class UserUpdatesTableManager extends DatabaseController{
         return userUpdates;
     }
 
+    /*
     public void CreateUserUpdatesWithTheNewUpdate(UserUpdates userUpdates){
         int updateID = UpdatesTableManager.getInstance().CreateANewUpdate(userUpdates.getUpdates().get(0));
 
         CreateUserUpdates(userUpdates, updateID);
     }
+    */
 
     private int getNextUserUpdatesID() {
         connect();

@@ -22,7 +22,7 @@ public class UserAtEventTableManager extends DatabaseController {
 
     public List<UserAtEvent> getUserAtEventForUsername(String Username){
         connect();
-        String sql = "SELECT Event_Title, In_Charge_Of, User_Updates FROM User_At_Event WHERE Regular_User_Username = ?";
+        String sql = "SELECT Event_Title, User_Updates FROM User_At_Event WHERE Regular_User_Username = ?";
         List<UserAtEvent> userAtEvents = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
@@ -31,10 +31,9 @@ public class UserAtEventTableManager extends DatabaseController {
             // loop through the result set
             while (rs.next()) {
                 String Event_Title = rs.getString("Event_Title");
-                String In_Charge_Of = rs.getString("In_Charge_Of");
                 int User_Updates = rs.getInt("User_Updates");
 
-                UserAtEvent curr = UserAtEventFactory.getInstance().Build(Username, Event_Title, In_Charge_Of, User_Updates);
+                UserAtEvent curr = UserAtEventFactory.getInstance().Build(Username, Event_Title, User_Updates);
                 userAtEvents.add(curr);
             }
         } catch (SQLException e) {
@@ -59,5 +58,29 @@ public class UserAtEventTableManager extends DatabaseController {
             System.out.println(e.getMessage());
         }
         disconnect();
+    }
+
+    public UserAtEvent getUserAtEventForEvent(String title) {
+        connect();
+        String sql = "SELECT Regular_User_Username, User_Updates FROM User_At_Event WHERE Event_Title = ?";
+        UserAtEvent userAtEvent = null;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                String Username = rs.getString("Regular_User_Username");
+                int User_Updates = rs.getInt("User_Updates");
+
+                userAtEvent = UserAtEventFactory.getInstance().Build(Username, title, User_Updates);
+                break;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        disconnect();
+        return userAtEvent;
     }
 }

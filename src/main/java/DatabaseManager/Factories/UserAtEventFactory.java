@@ -13,7 +13,7 @@ public class UserAtEventFactory {
     }
 
 
-    public UserAtEvent Build(String username, String event_title, String in_charge_of, int user_updates) {
+    public UserAtEvent Build(String username, String event_title, int user_updates) {
         // TODO: 6/15/2019
         return null;
     }

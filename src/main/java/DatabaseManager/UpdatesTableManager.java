@@ -1,7 +1,9 @@
 package DatabaseManager;
 
 import DatabaseManager.Factories.UpdatesFactory;
+import Events.Event;
 import Updates.Update;
+import Updates.UpdateData;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class UpdatesTableManager extends DatabaseController{
         return updates;
     }
 
-    public int CreateANewUpdate(Update update){
+    public int CreateANewUpdateFirstForTheEvent(Update update){
         int nextUpdateID = getNextUpdateID();
         update.setID(nextUpdateID);
 
@@ -65,6 +67,23 @@ public class UpdatesTableManager extends DatabaseController{
         disconnect();
 
         return nextUpdateID;
+    }
+
+    public void EditAnUpdate(int updateID, UpdateData newData){
+        //create last update data
+        int lastUpdateData = UpdateDataTableManager.getInstance().CreateANewUpdateData(newData);
+
+        connect();
+        String sql = "UPDATE Update SET Last_Update_Data = ? WHERE Update_ID = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, lastUpdateData);
+            pstmt.setInt(2, updateID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        disconnect();
     }
 
     private int getNextUpdateID() {
@@ -89,5 +108,31 @@ public class UpdatesTableManager extends DatabaseController{
         disconnect();
 
         return nextUpdateID;
+    }
+
+    public Update getUpdateByIDWithoutEvent(int updateID) {
+        connect();
+        String sql = "SELECT First_Update_Data, Last_Update_Data, User_Updates FROM Update WHERE Update_ID = ?";
+        Update update = null;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, updateID);
+            ResultSet rs = pstmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                int First_Update_Data = rs.getInt("First_Update_Data");
+                int Last_Update_Data = rs.getInt("Last_Update_Data");
+                int User_Updates = rs.getInt("User_Updates");
+
+                update = UpdatesFactory.getInstance().Build(updateID, First_Update_Data, Last_Update_Data, User_Updates);
+                break;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        disconnect();
+        return update;
     }
 }

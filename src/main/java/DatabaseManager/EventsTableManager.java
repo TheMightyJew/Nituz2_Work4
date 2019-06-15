@@ -51,7 +51,7 @@ public class EventsTableManager extends DatabaseController{
     }
 
     public void CreateANewEvent(Event event) {
-        int updateID = UpdatesTableManager.getInstance().CreateANewUpdate(event.getInitialUpdate());
+        int updateID = UpdatesTableManager.getInstance().CreateANewUpdateFirstForTheEvent(event.getInitialUpdate());
 
         connect();
         String sql = "INSERT INTO Events (Title, Publish_Time, Status ,First_Update) VALUES (?,?,?,?)";
@@ -60,7 +60,7 @@ public class EventsTableManager extends DatabaseController{
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, event.getTitle());
             pstmt.setString(2, event.getPublishTime().toString());
-            pstmt.setInt(3, event.getStatus().ordinal());
+            pstmt.setInt(3, event.getStatusInt());
             pstmt.setInt(4, updateID);
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -45,13 +45,13 @@ public class RelationEventCategoryTableManager extends DatabaseController {
         return events;
     }
 
-    public List<Category> getCategoriesForEvent(Event event){
+    public List<Category> getCategoriesForEvent(String event_title){
         connect();
         String sql = "SELECT Category_Name FROM Relation_Event_Category WHERE Event_Title = ?";
         List<Category> categories = new ArrayList<>();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, event.getTitle());
+            pstmt.setString(1, event_title);
             ResultSet rs = pstmt.executeQuery(sql);
 
             // loop through the result set

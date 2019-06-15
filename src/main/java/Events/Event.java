@@ -106,4 +106,22 @@ public class Event {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public void setStatus(int status) {
+        if(status == 0)
+            this.status = EventStatus.InProgress;
+        else
+            this.status = EventStatus.Done;
+    }
+
+    public int getStatusInt(){
+        if(status == EventStatus.InProgress)
+            return 0;
+        else
+            return 1;
+    }
 }
