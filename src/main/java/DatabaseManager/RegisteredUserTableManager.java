@@ -1,6 +1,7 @@
 package DatabaseManager;
 
 import Users.RegisteredUser;
+import Users.RegularUsers.RegularUser;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,5 +90,13 @@ public class RegisteredUserTableManager extends DatabaseController{
         disconnect();
 
         return Password;
+    }
+
+    public RegisteredUser getUserByUsername(String username) {
+        RegularUser regularUser = RegularUsersTableManager.getInstance().getUserByUsername(username);
+        if(regularUser != null)
+            return regularUser;
+        else
+            return AdminsTableManager.getInstance().getAdminByUsername(username);
     }
 }

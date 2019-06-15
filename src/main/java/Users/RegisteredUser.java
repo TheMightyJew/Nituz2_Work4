@@ -57,6 +57,10 @@ public abstract class RegisteredUser {
         return organization;
     }
 
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
     public UserStatus getStatus() {
         return status;
     }

@@ -1,8 +1,10 @@
 package DatabaseManager.Factories.RegularUserFactories;
 
+import Organizations.Organization;
 import Users.RegularUsers.RegularUser;
+import Users.RegularUsers.SecurityForceUser;
 
-public class SecurityForceUserFactory implements RegularUserBuilder{
+public class SecurityForceUserFactory implements RegularUserBuilder {
     private static SecurityForceUserFactory ourInstance = new SecurityForceUserFactory();
 
     public static SecurityForceUserFactory getInstance() {
@@ -13,8 +15,7 @@ public class SecurityForceUserFactory implements RegularUserBuilder{
     }
 
     @Override
-    public RegularUser Build(String Username, String Password, String Mail_Address, int Degree, int Status, String Type, String Organization_Name){
-        // TODO: 6/15/2019
-        return null;
+    public RegularUser Build(String Username, String Password, String Mail_Address, int Degree, int Status, String Type, Organization organization){
+        return new SecurityForceUser(null, Username, Mail_Address, Password, organization, Degree + "");
     }
 }

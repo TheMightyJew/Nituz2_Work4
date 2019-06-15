@@ -1,5 +1,7 @@
 package DatabaseManager.Factories.RegularUserFactories;
 
+import Organizations.Organization;
+import Users.RegularUsers.EmergencyCenterUser;
 import Users.RegularUsers.RegularUser;
 
 public class EmergencyCenterUserFactory implements RegularUserBuilder{
@@ -13,8 +15,7 @@ public class EmergencyCenterUserFactory implements RegularUserBuilder{
     }
 
     @Override
-    public RegularUser Build(String Username, String Password, String Mail_Address, int Degree, int Status, String Type, String Organization_Name){
-        // TODO: 6/15/2019
-        return null;
+    public RegularUser Build(String Username, String Password, String Mail_Address, int Degree, int Status, String Type, Organization organization){
+        return new EmergencyCenterUser(null,null,Username,Mail_Address,Password, organization, Degree + "");
     }
 }

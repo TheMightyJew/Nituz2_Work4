@@ -5,6 +5,8 @@ import DatabaseManager.*;
 import Events.Event;
 import Updates.Update;
 import Updates.UserAtEvent;
+import Users.RegularUsers.EmergencyCenterUser;
+import Users.RegularUsers.SecurityForceUser;
 
 import java.sql.Date;
 import java.util.List;
@@ -20,17 +22,24 @@ public class EventsFactory {
     }
 
     public Event Build(String Title, String Publish_Time, int Status, int First_Update){
-        //EmergencyCenterAdmin admin, String title, Update initialUpdate, SecurityForceUser user, List<Category> categories
-        UserAtEvent creator = UserAtEventTableManager.getInstance().getUserAtEventForEvent(Title);
+        List<UserAtEvent> users = UserAtEventTableManager.getInstance().getUserAtEventForEvent(Title);
+        UserAtEvent creator = null;
+        UserAtEvent inChargeFromOrg = null;
+        for(UserAtEvent curr : users){
+            if(curr.getUser() instanceof EmergencyCenterUser)
+                creator = curr;
+            else
+                inChargeFromOrg = curr;
+        }
         Update initialUpdate = UpdatesTableManager.getInstance().getUpdateByIDWithoutEvent(First_Update);
         List<Category> categories = RelationEventCategoryTableManager.getInstance().getCategoriesForEvent(Title);
-        /*
-        Event event = new Event();
+        Event event = new Event((EmergencyCenterUser)creator.getUser(), Title, initialUpdate, (SecurityForceUser)inChargeFromOrg.getUser(), categories);
         event.setPublishTime(Date.valueOf(Publish_Time));
         event.setStatus(Status);
+        creator.setEvent(event);
+        inChargeFromOrg.setEvent(event);
         return event;
-        */
-        return null;
+
     }
 
     public Event Build(String event_title, String publish_time, int status, int first_update, Category category) {

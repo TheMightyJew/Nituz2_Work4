@@ -1,7 +1,9 @@
 package DatabaseManager.Factories.OrganizationFactories;
 
+import DatabaseManager.AdminsTableManager;
 import DatabaseManager.Factories.OrganizationFactories.SecurityForceFactories.SecurityForceFactory;
 import Organizations.Organization;
+import Users.Admins.Admin;
 
 public class OrganizationFactory implements OrganizationBuilder {
     private static OrganizationFactory ourInstance = new OrganizationFactory();
@@ -23,7 +25,10 @@ public class OrganizationFactory implements OrganizationBuilder {
             //if(Type.contains("Security_Force")
             organization = SecurityForceFactory.getInstance().Build(Name, Type, Admin_Username);
         }
-        // TODO: 6/15/2019 connect the organization with it's admin and users...
+        //connect the organization with it's admin...
+        Admin admin = AdminsTableManager.getInstance().getAdminByUsernameWithoutCreatingOrg(Admin_Username);
+        organization.setAdmin(admin);
+        admin.setOrganization(organization);
         return organization;
     }
 }

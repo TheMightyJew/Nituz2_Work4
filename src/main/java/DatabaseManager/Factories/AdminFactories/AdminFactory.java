@@ -1,5 +1,7 @@
 package DatabaseManager.Factories.AdminFactories;
 
+import DatabaseManager.OrganizationsTableManager;
+import Organizations.Organization;
 import Users.Admins.Admin;
 
 public class AdminFactory implements AdminBuilder{
@@ -12,14 +14,19 @@ public class AdminFactory implements AdminBuilder{
     private AdminFactory() {
     }
 
+    public Admin Build(String Organization_Name) {
+        Organization organization = OrganizationsTableManager.getInstance().getOrganizationByName(Organization_Name);
+        return organization.getAdmin();
+    }
+
     @Override
-    public Admin Build(String Username, String Password, String Mail_Address, String Type, String Organization_Name) {
-        if(Type.equals("Emergency_Center")){
-            return EmergencyCenterAdminFactory.getInstance().Build(Username, Password, Mail_Address, Type, Organization_Name);
+    public Admin Build(String username, String password, String mail, String type) {
+        if(type.equals("Emergency_Center")){
+            return EmergencyCenterAdminFactory.getInstance().Build(username, password, mail, type);
         }
         else{
-            //if(Type.equals("Security_Force"))
-            return SecurityForceAdminFactory.getInstance().Build(Username, Password, Mail_Address, Type, Organization_Name);
+            //if(type.equals("Security_Force"))
+            return SecurityForceAdminFactory.getInstance().Build(username, password, mail, type);
         }
     }
 }

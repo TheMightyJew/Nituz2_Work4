@@ -1,6 +1,7 @@
 package DatabaseManager.Factories.AdminFactories;
 
 import Users.Admins.Admin;
+import Users.Admins.EmergencyCenterAdmin;
 
 public class EmergencyCenterAdminFactory implements AdminBuilder {
     private static EmergencyCenterAdminFactory ourInstance = new EmergencyCenterAdminFactory();
@@ -13,8 +14,7 @@ public class EmergencyCenterAdminFactory implements AdminBuilder {
     }
 
     @Override
-    public Admin Build(String Username, String Password, String Mail_Address, String Type, String Organization_Name) {
-        // TODO: 6/15/2019  
-        return null;
+    public Admin Build(String Username, String Password, String Mail_Address, String Type) {
+        return new EmergencyCenterAdmin(null, Username, Mail_Address, Password, null, null);
     }
 }

@@ -1,8 +1,10 @@
 package DatabaseManager.Factories.RegularUserFactories;
 
+import DatabaseManager.OrganizationsTableManager;
+import Organizations.Organization;
 import Users.RegularUsers.RegularUser;
 
-public class RegularUserFactory implements RegularUserBuilder {
+public class RegularUserFactory {
     private static RegularUserFactory ourInstance = new RegularUserFactory();
 
     public static RegularUserFactory getInstance() {
@@ -12,14 +14,14 @@ public class RegularUserFactory implements RegularUserBuilder {
     private RegularUserFactory() {
     }
 
-    @Override
     public RegularUser Build(String Username, String Password, String Mail_Address, int Degree, int Status, String Type, String Organization_Name){
+        Organization organization = OrganizationsTableManager.getInstance().getOrganizationByName(Organization_Name);
         if(Type.equals("Emergency_Center")){
-            return EmergencyCenterUserFactory.getInstance().Build(Username, Password, Mail_Address, Degree, Status, Type, Organization_Name);
+            return EmergencyCenterUserFactory.getInstance().Build(Username, Password, Mail_Address, Degree, Status, Type, organization);
         }
         else{
             //if(Type.equals("Security_Force"))
-            return SecurityForceUserFactory.getInstance().Build(Username, Password, Mail_Address, Degree, Status, Type, Organization_Name);
+            return SecurityForceUserFactory.getInstance().Build(Username, Password, Mail_Address, Degree, Status, Type, organization);
         }
     }
 }

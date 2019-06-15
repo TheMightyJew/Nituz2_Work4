@@ -60,10 +60,10 @@ public class UserAtEventTableManager extends DatabaseController {
         disconnect();
     }
 
-    public UserAtEvent getUserAtEventForEvent(String title) {
+    public List<UserAtEvent> getUserAtEventForEvent(String title) {
         connect();
         String sql = "SELECT Regular_User_Username, User_Updates FROM User_At_Event WHERE Event_Title = ?";
-        UserAtEvent userAtEvent = null;
+        List<UserAtEvent> userAtEvents = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -73,14 +73,14 @@ public class UserAtEventTableManager extends DatabaseController {
                 String Username = rs.getString("Regular_User_Username");
                 int User_Updates = rs.getInt("User_Updates");
 
-                userAtEvent = UserAtEventFactory.getInstance().Build(Username, title, User_Updates);
-                break;
+                UserAtEvent curr = UserAtEventFactory.getInstance().Build(Username, title, User_Updates);
+                userAtEvents.add(curr);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
         disconnect();
-        return userAtEvent;
+        return userAtEvents;
     }
 }
