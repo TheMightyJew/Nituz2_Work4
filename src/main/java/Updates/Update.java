@@ -4,23 +4,19 @@ import Events.Event;
 
 public class Update {
 
-    private Event event;
+    //private Event event;
     private Update previous;
     private Update next;
     private UpdateData data;
     private UpdateData firstData;
 
-    public Update(Event event, Update previous, UpdateData data) {
-        this.event = event;
+    public Update(Update previous, UpdateData data) {
         this.previous = previous;
         this.firstData = data;
         this.data = this.firstData;
         next = null;
     }
 
-    public Event getEvent() {
-        return event;
-    }
 
     public Update getPrevious() {
         return previous;

@@ -5,7 +5,12 @@ import Users.Admins.Admin;
 
 public abstract class SecurityForce extends Organization {
 
-    public SecurityForce(String id, Admin admin) {
-        super(id, admin);
+    public SecurityForce(String id) {
+        super(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Security Force";
     }
 }

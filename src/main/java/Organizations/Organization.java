@@ -14,9 +14,8 @@ public abstract class Organization {
     protected List<RegularUser> users;
     protected List<OrganizationAtEvent> events;
 
-    public Organization(String id, Admin admin) {
+    public Organization(String id) {
         this.id = id;
-        this.admin = admin;
         users = new ArrayList<RegularUser>();
         events = new ArrayList<OrganizationAtEvent>();
     }
@@ -50,5 +49,13 @@ public abstract class Organization {
         return false;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
 
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public abstract String toString();
 }
