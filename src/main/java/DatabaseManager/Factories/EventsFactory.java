@@ -24,9 +24,12 @@ public class EventsFactory {
         UserAtEvent creator = UserAtEventTableManager.getInstance().getUserAtEventForEvent(Title);
         Update initialUpdate = UpdatesTableManager.getInstance().getUpdateByIDWithoutEvent(First_Update);
         List<Category> categories = RelationEventCategoryTableManager.getInstance().getCategoriesForEvent(Title);
-        //Event event = new Event();
-        //event.setPublishTime(Date.valueOf(Publish_Time));
-        //event.setStatus(Status);
+        /*
+        Event event = new Event();
+        event.setPublishTime(Date.valueOf(Publish_Time));
+        event.setStatus(Status);
+        return event;
+        */
         return null;
     }
 

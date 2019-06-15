@@ -16,7 +16,7 @@ public class RegisteredUserTableManager extends DatabaseController{
     private RegisteredUserTableManager() {
     }
 
-    public void ChangePassword(RegisteredUser user, String newPassword) {
+    public void ChangePassword(String username, String newPassword) {
         connect();
         String sql = "UPDATE Registered_Users SET Password = ? WHERE Username = ?";
 
@@ -24,7 +24,7 @@ public class RegisteredUserTableManager extends DatabaseController{
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             // set the corresponding param
-            pstmt.setString(1, user.getUsername());
+            pstmt.setString(1, username);
             pstmt.setString(2, newPassword);
             // update
             pstmt.executeUpdate();
