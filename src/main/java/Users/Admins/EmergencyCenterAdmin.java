@@ -13,12 +13,10 @@ import java.util.List;
 
 public class EmergencyCenterAdmin extends Admin {
 
-    private CreateEventController createEventController;
     private CreateCategoryController createCategoryController;
 
-    public EmergencyCenterAdmin(ChangePasswordController changePasswordController, String username, String mailAddress, String password, Organization organization, CreateEventController createEventController, CreateCategoryController createCategoryController) {
+    public EmergencyCenterAdmin(ChangePasswordController changePasswordController, String username, String mailAddress, String password, Organization organization, CreateCategoryController createCategoryController) {
         super(changePasswordController, username, mailAddress, password, organization);
-        this.createEventController = createEventController;
         this.createCategoryController = createCategoryController;
     }
 
@@ -26,7 +24,4 @@ public class EmergencyCenterAdmin extends Admin {
         return createCategoryController.addNewCategory(username,category);
     }
 
-    public boolean addEvent(Date date, String title, UpdateData updateData, List<Category> categories, SecurityForceUser securityForceUser) {
-        return createEventController.createNewEvent(this,date,title,updateData,categories,securityForceUser);
-    }
 }

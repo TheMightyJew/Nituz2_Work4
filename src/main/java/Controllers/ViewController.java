@@ -1,6 +1,7 @@
 package Controllers;
 
 import Categories.Category;
+import DatabaseManager.RegisteredUserTableManager;
 import Events.Event;
 import Organizations.EmergencyCenter;
 import Organizations.SecurityForces.Police;
@@ -60,17 +61,21 @@ public class ViewController implements Initializable {
     private List<Event> events;
     private RegisteredUser loggedInUser;
 
+    private ChangePasswordController changePasswordController;
+    private CreateCategoryController createCategoryController;
+    private CreateEventController createEventController;
+
 
     public void initialize(URL location, ResourceBundle resources) {
         // TODO: 14-Jun-19
         /*loggedOut();*/
         //example
         EmergencyCenter emergencyCenter = new EmergencyCenter("1");
-        loggedInUser = new EmergencyCenterUser(null,"TheMightyJew","ssss","ssss",emergencyCenter,"5");
+        EmergencyCenterUser user = new EmergencyCenterUser(null,null,"TheMightyJew","ssss","ssss",emergencyCenter,"5");
         Update update = new Update(null,new UpdateData("Some info"));
         SecurityForce org = new Police("4");
         SecurityForceUser sfuser = new SecurityForceUser(null,"a","a","a",org,"5");
-        Event event = new Event((EmergencyCenterUser) loggedInUser,"Cool event",update,sfuser,null);
+        Event event = new Event((EmergencyCenterUser) user,"Cool event",update,sfuser,null);
         eventsTable.getItems().add(event);
         //end example
 
@@ -249,11 +254,15 @@ public class ViewController implements Initializable {
 
     public void loginSignIn(ActionEvent actionEvent){
         // TODO: 14-Jun-19
-        logIn();
+        if(RegisteredUserTableManager.getInstance().CheckIfUsernameIsTaken(loginUsername.getText())){
+            if(RegisteredUserTableManager.getInstance().GetPasswordByUsername(loginUsername.getText()).equals(loginPassword)){
+                logIn();
+            }
+        }
     }
 
     public void passwordConfirm(ActionEvent actionEvent){
-        // TODO: 14-Jun-19
+        changePasswordController.changePassword(loggedInUser.getUsername(),passwordOld.getText(),passwordNew.getText());
     }
 
 
