@@ -9,6 +9,7 @@ import Updates.Update;
 import Updates.UpdateData;
 import Users.Admins.EmergencyCenterAdmin;
 import Users.RegisteredUser;
+import Users.RegularUsers.EmergencyCenterUser;
 import Users.RegularUsers.SecurityForceUser;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -65,11 +66,11 @@ public class ViewController implements Initializable {
         /*loggedOut();*/
         //example
         EmergencyCenter emergencyCenter = new EmergencyCenter("1");
-        loggedInUser = new EmergencyCenterAdmin(null,"TheMightyJew","ssss","ssss",emergencyCenter,null,null);
+        loggedInUser = new EmergencyCenterUser(null,"TheMightyJew","ssss","ssss",emergencyCenter,"5");
         Update update = new Update(null,new UpdateData("Some info"));
         SecurityForce org = new Police("4");
         SecurityForceUser sfuser = new SecurityForceUser(null,"a","a","a",org,"5");
-        Event event = new Event((EmergencyCenterAdmin)loggedInUser,"Cool event",update,sfuser);
+        Event event = new Event((EmergencyCenterUser) loggedInUser,"Cool event",update,sfuser,null);
         eventsTable.getItems().add(event);
         //end example
 

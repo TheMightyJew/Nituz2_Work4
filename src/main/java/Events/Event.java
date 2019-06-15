@@ -6,6 +6,7 @@ import Organizations.SecurityForces.SecurityForce;
 import Updates.Update;
 import Updates.UserAtEvent;
 import Users.Admins.EmergencyCenterAdmin;
+import Users.RegularUsers.EmergencyCenterUser;
 import Users.RegularUsers.SecurityForceUser;
 
 import java.util.*;
@@ -16,7 +17,7 @@ public class Event {
         InProgress,Done;
     }
 
-    private EmergencyCenterAdmin admin;
+    private EmergencyCenterUser creator;
     private String title;
     private Date publishTime;
     private EventStatus status;
@@ -27,8 +28,8 @@ public class Event {
     private Map<Organization,UserAtEvent> organizationsAdmins;
     private List<Category> categories;
 
-    public Event(EmergencyCenterAdmin admin, String title, Update initialUpdate, SecurityForceUser user, List<Category> categories) {
-        this.admin = admin;
+    public Event(EmergencyCenterUser creator, String title, Update initialUpdate, SecurityForceUser user, List<Category> categories) {
+        this.creator = creator;
         this.title = title;
         this.initialUpdate = initialUpdate;
         //this.publishTime = Data.now or something;
@@ -67,8 +68,8 @@ public class Event {
         return status;
     }
 
-    public EmergencyCenterAdmin getAdmin() {
-        return admin;
+    public EmergencyCenterUser getCreator() {
+        return creator;
     }
 
     public Update getInitialUpdate() {
