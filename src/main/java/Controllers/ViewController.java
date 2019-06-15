@@ -145,7 +145,7 @@ public class ViewController implements Initializable {
                                         FXMLLoader fxmlLoader = new FXMLLoader();
                                         //primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("vacationPic2.jpg")));
                                         // TODO: 15-Jun-19 fix bug with path 
-                                        Parent root = fxmlLoader.load(getClass().getResource("NewUpdate.fxml").openStream());
+                                        Parent root = fxmlLoader.load(ViewController.class.getResource("/Controllers/NewUpdate.fxml").openStream());
                                         NewUpdateController controller = fxmlLoader.getController();
                                         /*Model model = new Model();
                                         viewController.setModel(model);*/
