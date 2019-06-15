@@ -129,6 +129,8 @@ public class ViewController implements Initializable {
                     final Button btn = new Button("Add");
                     {
                         btn.setAlignment(Pos.CENTER);
+                        btn.setMaxHeight(Double.MAX_VALUE);
+                        btn.setMaxWidth(Double.MAX_VALUE);
                     }
 
                     @Override
@@ -181,6 +183,8 @@ public class ViewController implements Initializable {
                     final Button btn = new Button("See");
                     {
                         btn.setAlignment(Pos.CENTER);
+                        btn.setMaxHeight(Double.MAX_VALUE);
+                        btn.setMaxWidth(Double.MAX_VALUE);
                     }
 
                     @Override
@@ -212,6 +216,8 @@ public class ViewController implements Initializable {
                     final Button btn = new Button("See");
                     {
                         btn.setAlignment(Pos.CENTER);
+                        btn.setMaxHeight(Double.MAX_VALUE);
+                        btn.setMaxWidth(Double.MAX_VALUE);
                     }
 
                     @Override
