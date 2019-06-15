@@ -43,4 +43,29 @@ public class OrganizationAtEventTableManager extends DatabaseController {
         disconnect();
         return organizationAtEvents;
     }
+
+    public List<OrganizationAtEvent> getOrganizationAtEventForEvent(String Event_Title){
+        connect();
+        String sql = "SELECT Organization_Name, In_Charge FROM Organization_At_Event WHERE Event_Title = ?";
+        List<OrganizationAtEvent> organizationAtEvents = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, Event_Title);
+            ResultSet rs = pstmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                String Organization_Name = rs.getString("Organization_Name");
+                String In_Charge = rs.getString("In_Charge");
+
+                OrganizationAtEvent curr = OrganizationAtEventFactory.getInstance().Build(Organization_Name, Event_Title, In_Charge);
+                organizationAtEvents.add(curr);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        disconnect();
+        return organizationAtEvents;
+    }
 }

@@ -1,5 +1,6 @@
 package DatabaseManager;
 
+import Categories.Category;
 import DatabaseManager.Factories.EventsFactory;
 import Events.Event;
 
@@ -67,5 +68,33 @@ public class EventsTableManager extends DatabaseController{
 
         // TODO: 6/15/2019 create the user_at_event and organization_at_event
         // TODO: 6/15/2019 add the category to the category list of the event
+    }
+
+    public Event getEventByTitleForCategory(String event_title, Category category) {
+        connect();
+        String sql = "SELECT Publish_Time, Status, First_Update FROM Events WHERE Title = ?";
+        Event event = null;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, event_title);
+            ResultSet rs = pstmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                if(event != null)
+                    throw new UnsupportedOperationException("Should not be here");
+
+                String Publish_Time = rs.getString("Publish_Time");
+                int Status = rs.getInt("Status");
+                int First_Update = rs.getInt("First_Update");
+
+                event = EventsFactory.getInstance().Build(event_title, Publish_Time, Status, First_Update, category);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        disconnect();
+        return event;
     }
 }
