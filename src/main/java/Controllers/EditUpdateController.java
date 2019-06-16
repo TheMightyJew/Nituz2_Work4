@@ -10,7 +10,7 @@ public class EditUpdateController extends Controller {
     public boolean Edit(RegisteredUser user, Event event, UpdateData updateData){
         try{
             // TODO: 16-Jun-19
-            //UpdatesTableManager.getInstance().EditAnUpdate(event.getTitle(),updateData);
+            UpdatesTableManager.getInstance().EditAnUpdate(event.getLastUpdate().getID(),updateData);
             return true;
         }
         catch (Exception e){

@@ -1,6 +1,7 @@
 package Controllers;
 
 import Categories.Category;
+import DatabaseManager.CategoriesTableManager;
 import DatabaseManager.RegisteredUserTableManager;
 import Events.Event;
 import Organizations.EmergencyCenter;
@@ -48,7 +49,7 @@ public class ViewController implements Initializable {
     public Tab addEventTab;
     public TextField publishTitle;
     public TextField publishUpdate;
-    public ChoiceBox<String> publishCategories;
+    public MenuButton menuCategories;
     public ComboBox<String> publishUser;
     //Tab My Events
     public Tab myEventsTab;
@@ -79,22 +80,16 @@ public class ViewController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         // TODO: 14-Jun-19
-        /*loggedOut();*/
-        //example
-        EmergencyCenter emergencyCenter = new EmergencyCenter("1");
-        EmergencyCenterUser user = new EmergencyCenterUser(null,null,"TheMightyJew","ssss","ssss",emergencyCenter,"5");
-        Update update = new Update(null,new UpdateData("Some info"));
-        SecurityForce org = new Police("4");
-        SecurityForceUser sfuser = new SecurityForceUser(null,"a","a","a",org,"5");
-        Event event = new Event((EmergencyCenterUser) user,"Cool event",update,sfuser,null);
-        eventsTable.getItems().add(event);
-        //end example
-        new Category("test");
-        new Category("test1");
-        new Category("test2");
-        new Category("test3");
-        publishCategories.getItems().addAll(Category.getCategoiresNames());
+        loggedOut();
+        addCategories();
         initializeEvents();
+    }
+
+    private void addCategories() {
+        for (Category c: CategoriesTableManager.getInstance().getAllCategories()){
+            CheckMenuItem item = new CheckMenuItem(c.getName());
+            menuCategories.getItems().add(item);
+        }
     }
 
     private void loggedOut() {
@@ -113,7 +108,7 @@ public class ViewController implements Initializable {
         tabPane.getTabs().add(myEventsTab);
         tabPane.getTabs().add(addEventTab);
         tabPane.getTabs().add(passwordTab);
-        publishCategories.getItems().addAll(Category.getCategoiresNames());
+        addCategories();
     }
 
     private void initializeEvents(){
@@ -259,10 +254,12 @@ public class ViewController implements Initializable {
     public void publish(ActionEvent actionEvent){
         if(loggedInUser instanceof EmergencyCenterUser){
             // TODO: 16-Jun-19 categories
-            List <Category> categories = Category.getCategories();
             List<Category> categoriesToEvent = new ArrayList<>();
-            for(String c:publishCategories.getItems()){
-                categoriesToEvent.add(Category.getCategory(c));
+            List<MenuItem> selectedCategory = menuCategories.getItems();
+            for(MenuItem category : selectedCategory){
+                if(((CheckMenuItem)category).isSelected()){
+                    categoriesToEvent.add(new Category(((CheckMenuItem)category).getText()));
+                }
             }
             RegisteredUser security = RegisteredUserTableManager.getInstance().getUserByUsername(publishUser.getValue());
             if(security instanceof SecurityForceUser){
