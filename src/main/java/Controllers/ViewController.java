@@ -281,6 +281,7 @@ public class ViewController implements Initializable {
                 if(security instanceof SecurityForceUser){
                     createEventController.createNewEvent(((EmergencyCenterUser)loggedInUser),publishTitle.getText(),new UpdateData(publishUpdate.getText()),categoriesToEvent,((SecurityForceUser)security));
                     Massage.infoMassage("Event added successfully");
+                    resetPublish();
                 }
             }
             catch (Exception e){
@@ -291,6 +292,17 @@ public class ViewController implements Initializable {
         else{
             Massage.errorMassage("Only Emergency center user can create an event");
         }
+    }
+
+    private void resetPublish() {
+        publishTitle.setText("");
+        publishUpdate.setText("");
+        publishUser.setValue(null);
+        List<MenuItem> selectedCategory = menuCategories.getItems();
+        for(MenuItem category : selectedCategory){
+            ((CheckMenuItem)category).setSelected(false);
+        }
+
     }
 
     public void loginSignIn(ActionEvent actionEvent){
@@ -313,4 +325,7 @@ public class ViewController implements Initializable {
     }
 
 
+    public void myEventsOpened(javafx.event.Event event) {
+        updateEvents();
+    }
 }

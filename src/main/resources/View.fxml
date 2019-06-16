@@ -109,7 +109,7 @@
                   </AnchorPane>
                   </content>
               </Tab>
-            <Tab fx:id="myEventsTab" text="My Events">
+            <Tab fx:id="myEventsTab" onSelectionChanged="#myEventsOpened" text="My Events">
               <content>
                   <ScrollPane>
                      <content>
