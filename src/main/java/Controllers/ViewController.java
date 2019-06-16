@@ -84,6 +84,7 @@ public class ViewController implements Initializable {
     }
 
     private void addCategories() {
+        menuCategories.getItems().clear();
         for (Category c: CategoriesTableManager.getInstance().getAllCategories()){
             CheckMenuItem item = new CheckMenuItem(c.getName());
             menuCategories.getItems().add(item);
@@ -126,12 +127,14 @@ public class ViewController implements Initializable {
         TableColumn<Event, String> eventTitle = new TableColumn("Title");
         TableColumn<Event, Date> eventDate = new TableColumn("Date");
         TableColumn<Event, Event.EventStatus> eventStatus = new TableColumn("Status");
+        TableColumn<Event, String> categories = new TableColumn("Categories");
         TableColumn<Event, String> initialUpdate = new TableColumn("First update");
         TableColumn<Event, String> lastUpdate = new TableColumn("Last update");
         TableColumn<Event, String> editUpdate = new TableColumn("Edit latest update");
         eventTitle.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getTitle()));
         eventDate.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getPublishTime()));
         eventStatus.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getStatus()));
+        categories.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getCategoriesNames()));
 
 
         Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryInitial = initialUpdateButton();
@@ -142,8 +145,8 @@ public class ViewController implements Initializable {
         lastUpdate.setCellFactory(cellFactoryLast);
         editUpdate.setCellFactory(cellFactoryEdit);
 
-        eventsTable.getColumns().addAll(eventTitle, eventDate, eventStatus , initialUpdate , lastUpdate , editUpdate);
-        eventsTable.setPrefWidth(eventsTable.getColumns().size()*150);
+        eventsTable.getColumns().addAll(eventTitle, eventDate, eventStatus ,categories, initialUpdate , lastUpdate , editUpdate);
+        eventsTable.setPrefWidth(eventsTable.getColumns().size()*250);
     }
 
     private Callback<TableColumn<Event, String>, TableCell<Event, String>> NewUpdateButton() {
