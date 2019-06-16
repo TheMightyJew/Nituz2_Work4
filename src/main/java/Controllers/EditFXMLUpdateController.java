@@ -1,7 +1,9 @@
 package Controllers;
 
+import DatabaseManager.UpdatesTableManager;
+import Events.Event;
+import Updates.UpdateData;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -10,10 +12,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class NewUpdateController implements Initializable {
+public class EditFXMLUpdateController implements Initializable {
 
     public TextField updateData;
-    private PublishUpdateController publishUpdateController;
+    private EditUpdateController editUpdateController;
     private Event event;
 
     @Override
@@ -21,17 +23,18 @@ public class NewUpdateController implements Initializable {
 
     }
 
-    public void init(PublishUpdateController publishUpdateController, Event event){
-        this.publishUpdateController = publishUpdateController;
+    public void init(EditUpdateController editUpdateController, Event event){
+        this.editUpdateController = editUpdateController;
         this.event = event;
     }
     public void cancel(ActionEvent actionEvent){
         close();
     }
 
-    public void add(ActionEvent actionEvent){
-        // TODO: 15-Jun-19
-        close();
+    public void edit(ActionEvent actionEvent){
+        if(editUpdateController.Edit(event,new UpdateData(updateData.getText()))){
+            close();
+        }
     }
 
     private void close(){

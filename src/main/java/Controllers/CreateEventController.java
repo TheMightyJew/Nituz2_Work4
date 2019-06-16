@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CreateEventController extends Controller {
 
-    public boolean createNewEvent(EmergencyCenterUser creator, Date date, String title, UpdateData updateData, List<Category> categories, SecurityForceUser securityForceUser){
+    public boolean createNewEvent(EmergencyCenterUser creator, String title, UpdateData updateData, List<Category> categories, SecurityForceUser securityForceUser){
         try {
             Event event = new Event(creator,title,new Update(null,updateData),securityForceUser,categories);
             EventsTableManager.getInstance().CreateANewEvent(event);

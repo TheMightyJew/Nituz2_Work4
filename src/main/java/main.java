@@ -34,7 +34,7 @@ public class main extends Application {
         //primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("vacationPic2.jpg")));
         Parent root = fxmlLoader.load(getClass().getResource("View.fxml").openStream());
         ViewController viewController = fxmlLoader.getController();
-        viewController.setControllers(new ChangePasswordController(),new CreateCategoryController(),new CreateEventController(),new EditUpdateController());
+        viewController.setControllers(new ChangePasswordController(),new CreateCategoryController(),new CreateEventController(),new EditUpdateController(viewController));
         /*Model model = new Model();
         viewController.setModel(model);*/
         primaryStage.setTitle("Emer Agency");

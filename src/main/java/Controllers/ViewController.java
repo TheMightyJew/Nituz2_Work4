@@ -2,14 +2,10 @@ package Controllers;
 
 import Categories.Category;
 import DatabaseManager.CategoriesTableManager;
+import DatabaseManager.EventsTableManager;
 import DatabaseManager.RegisteredUserTableManager;
 import Events.Event;
-import Organizations.EmergencyCenter;
-import Organizations.SecurityForces.Police;
-import Organizations.SecurityForces.SecurityForce;
-import Updates.Update;
 import Updates.UpdateData;
-import Users.Admins.EmergencyCenterAdmin;
 import Users.RegisteredUser;
 import Users.RegularUsers.EmergencyCenterUser;
 import Users.RegularUsers.SecurityForceUser;
@@ -44,7 +40,7 @@ public class ViewController implements Initializable {
     //Tab login
     public Tab loginTab;
     public TextField loginUsername;
-    public TextField loginPassword;
+    public PasswordField loginPassword;
     public Button signInButton;
     //Tab Add Event
     public Tab addEventTab;
@@ -83,7 +79,7 @@ public class ViewController implements Initializable {
         // TODO: 14-Jun-19
         loggedOut();
         signInButton.setTooltip(new Tooltip("Press to sign in"));
-        addCategories();
+        //addCategories();
         initializeEvents();
     }
 
@@ -111,10 +107,21 @@ public class ViewController implements Initializable {
         tabPane.getTabs().add(addEventTab);
         tabPane.getTabs().add(passwordTab);
         addCategories();
+        addUsers();
+        updateEvents();
+    }
+
+    private void addUsers() {
+
+    }
+
+    public void updateEvents(){
+        events = EventsTableManager.getInstance().getAllEventsForUsername(loggedInUser.getUsername());
+        eventsTable.getItems().clear();
+        eventsTable.getItems().addAll(events);
     }
 
     private void initializeEvents(){
-        events=new ArrayList<Event>();
         eventsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         TableColumn<Event, String> eventTitle = new TableColumn("Title");
         TableColumn<Event, Date> eventDate = new TableColumn("Date");
@@ -123,7 +130,6 @@ public class ViewController implements Initializable {
         TableColumn<Event, String> lastUpdate = new TableColumn("Last update");
         TableColumn<Event, String> editUpdate = new TableColumn("Edit latest update");
         eventTitle.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getTitle()));
-        // TODO: 15-Jun-19 fix date
         eventDate.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getPublishTime()));
         eventStatus.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getStatus()));
 
@@ -144,7 +150,7 @@ public class ViewController implements Initializable {
         return new Callback<TableColumn<Event, String>, TableCell<Event, String>>() {
             public TableCell<Event, String> call(final TableColumn<Event, String> param) {
                 final TableCell<Event, String> cell = new TableCell<Event, String>() {
-                    final Button btn = new Button("Add");
+                    final Button btn = new Button("Edit latest update");
                     {
                         btn.setAlignment(Pos.CENTER);
                         btn.setMaxHeight(Double.MAX_VALUE);
@@ -162,11 +168,13 @@ public class ViewController implements Initializable {
                                 btn.setOnAction(event -> {
                                     try {
                                         FXMLLoader fxmlLoader = new FXMLLoader();
-                                        Parent root = fxmlLoader.load(ViewController.class.getResource("/Controllers/NewUpdate.fxml").openStream());
-                                        NewUpdateController controller = fxmlLoader.getController();
+                                        Parent root = fxmlLoader.load(ViewController.class.getResource("/Controllers/EditUpdate.fxml").openStream());
+                                        EditFXMLUpdateController controller = fxmlLoader.getController();
+                                        Event pickedEvent = getTableView().getItems().get(getIndex());
+                                        controller.init(editUpdateController,pickedEvent);
                                         Stage stage = new Stage();
                                         stage.initModality(Modality.APPLICATION_MODAL);
-                                        stage.setTitle("New Update");
+                                        stage.setTitle("Edit latest update");
                                         stage.setScene(new Scene(root));
                                         stage.show();
                                     }
@@ -272,7 +280,7 @@ public class ViewController implements Initializable {
 
     public void loginSignIn(ActionEvent actionEvent){
         if(RegisteredUserTableManager.getInstance().CheckIfUsernameIsTaken(loginUsername.getText())){
-            if(RegisteredUserTableManager.getInstance().GetPasswordByUsername(loginUsername.getText()).equals(loginPassword)){
+            if(RegisteredUserTableManager.getInstance().GetPasswordByUsername(loginUsername.getText()).equals(loginPassword.getText())){
                 Massage.infoMassage("Logged in successfully!");
                 logIn();
             }
