@@ -77,4 +77,26 @@ public class RegularUsersTableManager extends DatabaseController {
         disconnect();
         return regularUser;
     }
+
+    public List<String> getSecurityForceUsers(){
+        connect();
+        String sql = "SELECT Username FROM Registered_Users INNER JOIN Regular_Users ON Registered_Users.Username=Regular_Users.Username WHERE Type = 'Security_Force'";
+        List<String> users = new ArrayList<>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                String username = rs.getString("Username");
+
+                users.add(username);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        disconnect();
+        return users;
+    }
 }
