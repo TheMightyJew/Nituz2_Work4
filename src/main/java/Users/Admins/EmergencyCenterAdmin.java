@@ -1,8 +1,15 @@
 package Users.Admins;
 
+import Categories.Category;
 import Controllers.ChangePasswordController;
 import Controllers.CreateCategoryController;
+import Controllers.CreateEventController;
 import Organizations.Organization;
+import Updates.UpdateData;
+import Users.RegularUsers.SecurityForceUser;
+
+import java.util.Date;
+import java.util.List;
 
 public class EmergencyCenterAdmin extends Admin {
 
@@ -14,7 +21,7 @@ public class EmergencyCenterAdmin extends Admin {
     }
 
     public boolean addCategory(String category){
-        return createCategoryController.addNewCategory(category);
+        return createCategoryController.addNewCategory(username,category);
     }
 
 }

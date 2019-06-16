@@ -49,8 +49,8 @@ public class ViewController implements Initializable {
     public Tab addEventTab;
     public TextField publishTitle;
     public TextField publishUpdate;
-    public MenuButton menuCategories;
-    public ComboBox<String> publishUser;
+    public ChoiceBox<Category> publishCategories;
+    public ComboBox<SecurityForceUser> publishUser;
     //Tab My Events
     public Tab myEventsTab;
     public TableView<Event> eventsTable;
@@ -65,23 +65,21 @@ public class ViewController implements Initializable {
     private ChangePasswordController changePasswordController;
     private CreateCategoryController createCategoryController;
     private CreateEventController createEventController;
-    private EditUpdateController editUpdateController;
-
-    public void setControllers(ChangePasswordController changePasswordController,
-            CreateCategoryController createCategoryController,
-            CreateEventController createEventController,
-            EditUpdateController editUpdateController){
-        this.changePasswordController = changePasswordController;
-        this.createCategoryController = createCategoryController;
-        this.createEventController = createEventController;
-        this.editUpdateController = editUpdateController;
-    }
 
 
     public void initialize(URL location, ResourceBundle resources) {
         // TODO: 14-Jun-19
-        loggedOut();
-        addCategories();
+        /*loggedOut();*/
+        //example
+        EmergencyCenter emergencyCenter = new EmergencyCenter("1");
+        EmergencyCenterUser user = new EmergencyCenterUser(null,null,"TheMightyJew","ssss","ssss",emergencyCenter,"5");
+        Update update = new Update(null,new UpdateData("Some info"));
+        SecurityForce org = new Police("4");
+        SecurityForceUser sfuser = new SecurityForceUser(null,"a","a","a",org,"5");
+        Event event = new Event((EmergencyCenterUser) user,"Cool event",update,sfuser,null);
+        eventsTable.getItems().add(event);
+        //end example
+
         initializeEvents();
     }
 
@@ -99,7 +97,6 @@ public class ViewController implements Initializable {
     }
 
     private void logIn(){
-        loggedInUser = changePasswordController.reviewPersonalInformation(loginUsername.getText());
         userDetails.setVisible(true);
         helloUsername.setText(loggedInUser.getUsername());
         organization.setText(loggedInUser.getOrganization().toString());
@@ -108,7 +105,7 @@ public class ViewController implements Initializable {
         tabPane.getTabs().add(myEventsTab);
         tabPane.getTabs().add(addEventTab);
         tabPane.getTabs().add(passwordTab);
-        addCategories();
+
     }
 
     private void initializeEvents(){
@@ -119,7 +116,8 @@ public class ViewController implements Initializable {
         TableColumn<Event, Event.EventStatus> eventStatus = new TableColumn("Status");
         TableColumn<Event, String> initialUpdate = new TableColumn("First update");
         TableColumn<Event, String> lastUpdate = new TableColumn("Last update");
-        TableColumn<Event, String> editUpdate = new TableColumn("Edit latest update");
+        TableColumn<Event, String> newUpdate = new TableColumn("Add new update");
+        // TODO: 14-Jun-19
         eventTitle.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getTitle()));
         // TODO: 15-Jun-19 fix date
         eventDate.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getPublishTime()));
@@ -128,13 +126,13 @@ public class ViewController implements Initializable {
 
         Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryInitial = initialUpdateButton();
         Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryLast = lastUpdateButton();
-        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEdit = NewUpdateButton();
+        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryNew = NewUpdateButton();
 
         initialUpdate.setCellFactory(cellFactoryInitial);
         lastUpdate.setCellFactory(cellFactoryLast);
-        editUpdate.setCellFactory(cellFactoryEdit);
+        newUpdate.setCellFactory(cellFactoryNew);
 
-        eventsTable.getColumns().addAll(eventTitle, eventDate, eventStatus , initialUpdate , lastUpdate , editUpdate);
+        eventsTable.getColumns().addAll(eventTitle, eventDate, eventStatus , initialUpdate , lastUpdate , newUpdate);
         eventsTable.setPrefWidth(eventsTable.getColumns().size()*150);
     }
 
@@ -156,12 +154,17 @@ public class ViewController implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
+                            // TODO: 15-Jun-19 problem with lamda fucntion
                             try{
                                 btn.setOnAction(event -> {
                                     try {
                                         FXMLLoader fxmlLoader = new FXMLLoader();
+                                        //primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("vacationPic2.jpg")));
+                                        // TODO: 15-Jun-19 fix bug with path 
                                         Parent root = fxmlLoader.load(ViewController.class.getResource("/Controllers/NewUpdate.fxml").openStream());
                                         NewUpdateController controller = fxmlLoader.getController();
+                                        /*Model model = new Model();
+                                        viewController.setModel(model);*/
                                         Stage stage = new Stage();
                                         stage.initModality(Modality.APPLICATION_MODAL);
                                         stage.setTitle("New Update");
@@ -205,6 +208,7 @@ public class ViewController implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
+                            // TODO: 15-Jun-19 problem with lamda fucntion
                                     btn.setOnAction(event -> {
                                         Event pickedEvent = getTableView().getItems().get(getIndex());
                                         Massage.infoMassage(pickedEvent.getInitialUpdate().getData().getData());
@@ -237,6 +241,7 @@ public class ViewController implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
+                            // TODO: 15-Jun-19 problem with lamda fucntion
                                     btn.setOnAction(event -> {
                                         Event pickedEvent = getTableView().getItems().get(getIndex());
                                         Massage.infoMassage(pickedEvent.getLastUpdate().getData().getData());
@@ -252,23 +257,11 @@ public class ViewController implements Initializable {
     }
 
     public void publish(ActionEvent actionEvent){
-        if(loggedInUser instanceof EmergencyCenterUser){
-            // TODO: 16-Jun-19 categories
-            List<Category> categoriesToEvent = new ArrayList<>();
-            List<MenuItem> selectedCategory = menuCategories.getItems();
-            for(MenuItem category : selectedCategory){
-                if(((CheckMenuItem)category).isSelected()){
-                    categoriesToEvent.add(new Category(((CheckMenuItem)category).getText()));
-                }
-            }
-            RegisteredUser security = RegisteredUserTableManager.getInstance().getUserByUsername(publishUser.getValue());
-            if(security instanceof SecurityForceUser){
-                createEventController.createNewEvent(((EmergencyCenterUser)loggedInUser),publishTitle.getText(),new UpdateData(publishUpdate.getText()),categoriesToEvent,((SecurityForceUser)security));
-            }
-        }
+        // TODO: 14-Jun-19
     }
 
     public void loginSignIn(ActionEvent actionEvent){
+        // TODO: 14-Jun-19
         if(RegisteredUserTableManager.getInstance().CheckIfUsernameIsTaken(loginUsername.getText())){
             if(RegisteredUserTableManager.getInstance().GetPasswordByUsername(loginUsername.getText()).equals(loginPassword)){
                 logIn();
