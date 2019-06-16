@@ -19,15 +19,14 @@ public class RegisteredUserTableManager extends DatabaseController{
 
     public void ChangePassword(String username, String newPassword) {
         connect();
-        String sql = "UPDATE Registered_Users SET Password = ? "
-                + "WHERE Username = ?";
+        String sql = "UPDATE Registered_Users SET Password = ? WHERE Username = ?";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             // set the corresponding param
-            pstmt.setString(1, username);
-            pstmt.setString(2, newPassword);
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);
             // update
             pstmt.executeUpdate();
             int breakPoint = 0;

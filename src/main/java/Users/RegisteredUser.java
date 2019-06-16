@@ -49,6 +49,7 @@ public abstract class RegisteredUser {
     }
 
     public void setPassword(String password) {
+        // TODO: 14-Jun-19
         this.password = password;
     }
 

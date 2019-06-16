@@ -21,7 +21,7 @@ public class UpdatesTableManager extends DatabaseController{
 
     public List<Update> getAllUpdatesForAnEvent(String Event_Title) {
         connect();
-        String sql = "SELECT Update_ID, First_Update_Data, Last_Update_Data, User_Updates FROM Update WHERE Event_Title = ?";
+        String sql = "SELECT Update_ID, First_Update_Data, Last_Update_Data, User_Updates FROM Updates WHERE Event_Title = ?";
         List<Update> updates = new ArrayList<>();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class UpdatesTableManager extends DatabaseController{
         int firstUpdateDataID = UpdateDataTableManager.getInstance().CreateANewUpdateData(update.getFirstData());
 
         connect();
-        String sql = "INSERT INTO Update (Update_ID, First_Update_Data, Last_Update_Data, Next_For_User, Next_For_Event, User_Updates, Event_Title) VALUES (?,?,NULL,NULL,NULL,NULL,NULL)";
+        String sql = "INSERT INTO Updates (Update_ID, First_Update_Data, Last_Update_Data, Next_For_User, Next_For_Event, User_Updates, Event_Title) VALUES (?,?,NULL,NULL,NULL,NULL,NULL)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -74,7 +74,7 @@ public class UpdatesTableManager extends DatabaseController{
         int lastUpdateData = UpdateDataTableManager.getInstance().CreateANewUpdateData(newData);
 
         connect();
-        String sql = "UPDATE Update SET Last_Update_Data = ? WHERE Update_ID = ?";
+        String sql = "UPDATE Updates SET Last_Update_Data = ? WHERE Update_ID = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, lastUpdateData);
@@ -88,7 +88,7 @@ public class UpdatesTableManager extends DatabaseController{
 
     private int getNextUpdateID() {
         connect();
-        String sql = "SELECT MAX(Update_ID) AS Max_ID FROM Update";
+        String sql = "SELECT MAX(Update_ID) AS Max_ID FROM Updates";
         int nextUpdateID = 0;
         boolean wasHere = false;
         try {
@@ -112,7 +112,7 @@ public class UpdatesTableManager extends DatabaseController{
 
     public Update getUpdateByIDWithoutEvent(int updateID) {
         connect();
-        String sql = "SELECT First_Update_Data, Last_Update_Data, User_Updates FROM Update WHERE Update_ID = ?";
+        String sql = "SELECT First_Update_Data, Last_Update_Data, User_Updates FROM Updates WHERE Update_ID = ?";
         Update update = null;
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);

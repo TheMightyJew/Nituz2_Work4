@@ -95,14 +95,16 @@ public class EventsTableManager extends DatabaseController{
         }
         disconnect();
 
-        UserAtEvent creator = event.getUsers().get(0);
-        //create the user_Updates
-        UserUpdates userUpdates = creator.getUpdates();
-        UserUpdatesTableManager.getInstance().CreateUserUpdates(userUpdates, updateID);
-        //create the user_at_event and organization_at_event
-        UserAtEventTableManager.getInstance().CreateUserAtEvent(creator);
-        OrganizationAtEvent creators_organization = event.getOrganizations().get(0);
-        OrganizationAtEventTableManager.getInstance().CreateOrganizationAtEvent(creators_organization);
+        for(UserAtEvent curr : event.getUsers()) {
+            //create the user_Updates
+            UserUpdates userUpdates = curr.getUpdates();
+            UserUpdatesTableManager.getInstance().CreateUserUpdates(userUpdates, updateID);
+            //create the user_at_event and organization_at_event
+            UserAtEventTableManager.getInstance().CreateUserAtEvent(curr);
+        }
+        for(OrganizationAtEvent curr : event.getOrganizations()) {
+            OrganizationAtEventTableManager.getInstance().CreateOrganizationAtEvent(curr);
+        }
         //add the categories to the category list of the event
         for(Category category : event.getCategories()) {
             RelationEventCategoryTableManager.getInstance().CreateNewRelation(event, category);

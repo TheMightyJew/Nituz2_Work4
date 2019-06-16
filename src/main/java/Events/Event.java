@@ -7,8 +7,10 @@ import Updates.Update;
 import Updates.UserAtEvent;
 import Users.Admins.EmergencyCenterAdmin;
 import Users.RegularUsers.EmergencyCenterUser;
+import Users.RegularUsers.RegularUser;
 import Users.RegularUsers.SecurityForceUser;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Event {
@@ -32,28 +34,29 @@ public class Event {
         this.creator = creator;
         this.title = title;
         this.initialUpdate = initialUpdate;
-        //this.publishTime = Data.now or something;
+        this.publishTime = new Date(); // current's date
         status = EventStatus.InProgress;
         lastUpdate = initialUpdate;
         users = new ArrayList<UserAtEvent>();
         organizations = new ArrayList<OrganizationAtEvent>();
         organizationsAdmins = new HashMap<Organization, UserAtEvent>();
+        addUser(creator);
         addUser(user);
         this.categories = categories;
 
     }
 
-    private void addUser(SecurityForceUser user) {
-        UserAtEvent userAtEvent = new UserAtEvent(user,this);
+    private void addUser(RegularUser user) {
+        UserAtEvent userAtEvent = new UserAtEvent(user, this);
         users.add(userAtEvent);
         Organization organization = user.getOrganization();
-        if(organization instanceof SecurityForce){
-            if(organizationsAdmins.containsKey(organization)==false){
-                organizationsAdmins.put(organization,userAtEvent);
-                OrganizationAtEvent organizationAtEvent = new OrganizationAtEvent(organization,this, userAtEvent);
-                organizations.add(organizationAtEvent);
-            }
+        //if(organization instanceof SecurityForce){
+        if (organizationsAdmins.containsKey(organization) == false) {
+            organizationsAdmins.put(organization, userAtEvent);
+            OrganizationAtEvent organizationAtEvent = new OrganizationAtEvent(organization, this, userAtEvent);
+            organizations.add(organizationAtEvent);
         }
+        //}
     }
 
     public String getTitle() {
@@ -124,5 +127,9 @@ public class Event {
             return 0;
         else
             return 1;
+    }
+
+    public void setCreator(EmergencyCenterUser creator) {
+        this.creator = creator;
     }
 }

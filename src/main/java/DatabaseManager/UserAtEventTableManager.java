@@ -46,7 +46,7 @@ public class UserAtEventTableManager extends DatabaseController {
 
     public void CreateUserAtEvent(UserAtEvent userAtEvent){
         connect();
-        String sql = "INSERT INTO User_At_Event (Regular_User_Username, Event_Title, User_Updates) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO User_At_Event (Regular_User_Username, Event_Title, User_Updates) VALUES (?,?,?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -65,8 +65,11 @@ public class UserAtEventTableManager extends DatabaseController {
         String sql = "SELECT Regular_User_Username, User_Updates FROM User_At_Event WHERE Event_Title = ?";
         List<UserAtEvent> userAtEvents = new ArrayList<>();
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            // set the corresponding param
+            pstmt.setString(1, title);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {

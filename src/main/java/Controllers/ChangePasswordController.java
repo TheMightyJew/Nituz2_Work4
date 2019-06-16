@@ -2,21 +2,15 @@ package Controllers;
 
 import DatabaseManager.RegisteredUserTableManager;
 import DatabaseManager.RegularUsersTableManager;
-import Users.RegisteredUser;
 
 import java.util.List;
 
 public class ChangePasswordController extends Controller{
 
-    public RegisteredUser reviewPersonalInformation(String username){
-        try{
-            return RegisteredUserTableManager.getInstance().getUserByUsername(username);
-        }
-        catch (Exception e){
-            return null;
-        }
-
-
+    public List<String> reviewPersonalInformation(String username){
+        List<String> info = null;
+        // TODO: 14-Jun-19
+        return info;
     }
 
     public boolean changePassword(String username , String oldPassowrd , String newPassword ){
