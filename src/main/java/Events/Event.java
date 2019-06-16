@@ -132,4 +132,13 @@ public class Event {
     public void setCreator(EmergencyCenterUser creator) {
         this.creator = creator;
     }
+
+    public String getCategoriesNames(){
+        String ans="";
+        for (Category c:categories){
+            ans+= c.getName()+",";
+
+        }
+        return ans;
+    }
 }
