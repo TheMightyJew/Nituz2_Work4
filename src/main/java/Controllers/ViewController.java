@@ -45,6 +45,7 @@ public class ViewController implements Initializable {
     public Tab loginTab;
     public TextField loginUsername;
     public TextField loginPassword;
+    public Button signInButton;
     //Tab Add Event
     public Tab addEventTab;
     public TextField publishTitle;
@@ -81,6 +82,7 @@ public class ViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // TODO: 14-Jun-19
         loggedOut();
+        signInButton.setTooltip(new Tooltip("Press to sign in"));
         addCategories();
         initializeEvents();
     }
@@ -271,8 +273,15 @@ public class ViewController implements Initializable {
     public void loginSignIn(ActionEvent actionEvent){
         if(RegisteredUserTableManager.getInstance().CheckIfUsernameIsTaken(loginUsername.getText())){
             if(RegisteredUserTableManager.getInstance().GetPasswordByUsername(loginUsername.getText()).equals(loginPassword)){
+                Massage.infoMassage("Logged in successfully!");
                 logIn();
             }
+            else {
+                Massage.errorMassage("Password is incorrect!");
+            }
+        }
+        else {
+            Massage.errorMassage("Username doesnt exists");
         }
     }
 
