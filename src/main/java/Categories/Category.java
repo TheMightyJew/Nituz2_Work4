@@ -8,7 +8,7 @@ public class Category {
 
     private String name;
     private List<Event> events;
-    private static Map<String ,Category> categories;
+    private static Map<String ,Category> categories = new HashMap<>();
 
     public Category(String name) {
         this.name = name;
@@ -45,6 +45,14 @@ public class Category {
 
     public static List<Category> getCategories(){
         return new ArrayList<Category>(categories.values());
+    }
+
+    public static List<String> getCategoiresNames(){
+        List <String> ans=new ArrayList<>();
+        for (Category c:getCategories()){
+            ans.add(c.getName());
+        }
+        return ans;
     }
 
 

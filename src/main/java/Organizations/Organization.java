@@ -1,6 +1,10 @@
 package Organizations;
 
+import DatabaseManager.OrganizationAtEventTableManager;
+import DatabaseManager.OrganizationsTableManager;
+import DatabaseManager.UserAtEventTableManager;
 import Events.OrganizationAtEvent;
+import Updates.UserAtEvent;
 import Users.Admins.Admin;
 import Users.RegularUsers.RegularUser;
 
@@ -35,18 +39,31 @@ public abstract class Organization {
     }
 
     public void addOrganizationAtEvent(OrganizationAtEvent oae){
-        // TODO: 14-Jun-19 //check
+        OrganizationAtEventTableManager.getInstance().CreateOrganizationAtEvent(oae);
         events.add(oae);
     }
 
     public boolean addUser(RegularUser user){
-        // TODO: 14-Jun-19
-        return false;
+        try{
+            // TODO: 16-Jun-19
+            users.add(user);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+
     }
 
     public boolean removeUser(RegularUser user){
-        // TODO: 14-Jun-19
-        return false;
+        try{
+            // TODO: 16-Jun-19
+            users.remove(user);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     public Admin getAdmin() {

@@ -9,8 +9,7 @@ public class UpdateData {
 
     public UpdateData(String data) {
         this.data = data;
-        // TODO: 15-Jun-19  
-        //this.date = Date.now or soemthing;
+        this.date = new Date();
     }
 
     public String getData() {

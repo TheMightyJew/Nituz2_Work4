@@ -20,6 +20,6 @@ public class EmergencyCenterUser extends RegularUser {
     }
 
     public boolean addEvent(Date date, String title, UpdateData updateData, List<Category> categories, SecurityForceUser securityForceUser) {
-        return createEventController.createNewEvent(this,date,title,updateData,categories,securityForceUser);
+        return createEventController.createNewEvent(this,title,updateData,categories,securityForceUser);
     }
 }
