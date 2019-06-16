@@ -26,7 +26,7 @@ public class UserUpdatesTableManager extends DatabaseController{
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Username);
             pstmt.setString(2, Event_Title);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {

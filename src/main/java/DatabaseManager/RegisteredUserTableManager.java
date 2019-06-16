@@ -19,7 +19,8 @@ public class RegisteredUserTableManager extends DatabaseController{
 
     public void ChangePassword(String username, String newPassword) {
         connect();
-        String sql = "UPDATE Registered_Users SET Password = ? WHERE Username = ?";
+        String sql = "UPDATE Registered_Users SET Password = ? "
+                + "WHERE Username = ?";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -29,6 +30,7 @@ public class RegisteredUserTableManager extends DatabaseController{
             pstmt.setString(2, newPassword);
             // update
             pstmt.executeUpdate();
+            int breakPoint = 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -46,7 +48,7 @@ public class RegisteredUserTableManager extends DatabaseController{
 
             // set the corresponding param
             pstmt.setString(1, Username);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
             // loop through the result set
             while (rs.next()) {
                 if(alreadyEntered)
@@ -75,7 +77,7 @@ public class RegisteredUserTableManager extends DatabaseController{
 
             // set the corresponding param
             pstmt.setString(1, Username);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
             // loop through the result set
             while (rs.next()) {
                 if(Password != null)

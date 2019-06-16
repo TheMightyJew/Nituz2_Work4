@@ -28,7 +28,7 @@ public class UpdateDataTableManager extends DatabaseController{
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, updateDataID);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {

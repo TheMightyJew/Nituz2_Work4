@@ -52,7 +52,7 @@ public class OrganizationsTableManager extends DatabaseController{
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, organization_name);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {

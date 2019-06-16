@@ -26,7 +26,7 @@ public class OrganizationAtEventTableManager extends DatabaseController {
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Organization_Name);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {
@@ -51,7 +51,7 @@ public class OrganizationAtEventTableManager extends DatabaseController {
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Event_Title);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {
