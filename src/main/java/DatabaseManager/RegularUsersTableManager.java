@@ -80,7 +80,7 @@ public class RegularUsersTableManager extends DatabaseController {
 
     public List<String> getSecurityForceUsers(){
         connect();
-        String sql = "SELECT Username FROM Registered_Users INNER JOIN Regular_Users ON Registered_Users.Username=Regular_Users.Username WHERE Type = 'Security_Force'";
+        String sql = "SELECT Regular_Users.Username FROM Registered_Users INNER JOIN Regular_Users ON Registered_Users.Username=Regular_Users.Username WHERE Type = 'Security_Force'";
         List<String> users = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
