@@ -17,6 +17,7 @@ public class UserAtEventFactory {
 
     public UserAtEvent Build(String username, String event_title, int user_updates) {
         RegularUser user = RegularUsersTableManager.getInstance().getUserByUsername(username);
-        return null;
+        UserAtEvent userAtEvent = new UserAtEvent(user);
+        return userAtEvent;
     }
 }

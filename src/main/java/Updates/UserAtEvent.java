@@ -16,6 +16,12 @@ public class UserAtEvent {
         updates = new UserUpdates(this);
     }
 
+    public UserAtEvent(RegularUser user) {
+        this.user = user;
+        this.event = null;
+        updates = new UserUpdates(this);
+    }
+
     public RegularUser getUser() {
         return user;
     }
