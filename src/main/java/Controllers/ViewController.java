@@ -4,10 +4,12 @@ import Categories.Category;
 import DatabaseManager.CategoriesTableManager;
 import DatabaseManager.EventsTableManager;
 import DatabaseManager.RegisteredUserTableManager;
+import DatabaseManager.RegularUsersTableManager;
 import Events.Event;
 import Updates.UpdateData;
 import Users.RegisteredUser;
 import Users.RegularUsers.EmergencyCenterUser;
+import Users.RegularUsers.RegularUser;
 import Users.RegularUsers.SecurityForceUser;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -113,7 +115,8 @@ public class ViewController implements Initializable {
     }
 
     private void addUsers() {
-
+        publishUser.getItems().clear();
+        publishUser.getItems().addAll(RegularUsersTableManager.getInstance().getSecurityForceUsers());
     }
 
     public void updateEvents(){
@@ -266,18 +269,27 @@ public class ViewController implements Initializable {
 
     public void publish(ActionEvent actionEvent){
         if(loggedInUser instanceof EmergencyCenterUser){
-            // TODO: 16-Jun-19 categories
-            List<Category> categoriesToEvent = new ArrayList<>();
-            List<MenuItem> selectedCategory = menuCategories.getItems();
-            for(MenuItem category : selectedCategory){
-                if(((CheckMenuItem)category).isSelected()){
-                    categoriesToEvent.add(new Category(((CheckMenuItem)category).getText()));
+            try{
+                List<Category> categoriesToEvent = new ArrayList<>();
+                List<MenuItem> selectedCategory = menuCategories.getItems();
+                for(MenuItem category : selectedCategory){
+                    if(((CheckMenuItem)category).isSelected()){
+                        categoriesToEvent.add(new Category(((CheckMenuItem)category).getText()));
+                    }
+                }
+                RegisteredUser security = RegisteredUserTableManager.getInstance().getUserByUsername(publishUser.getValue());
+                if(security instanceof SecurityForceUser){
+                    createEventController.createNewEvent(((EmergencyCenterUser)loggedInUser),publishTitle.getText(),new UpdateData(publishUpdate.getText()),categoriesToEvent,((SecurityForceUser)security));
+                    Massage.infoMassage("Event added successfully");
                 }
             }
-            RegisteredUser security = RegisteredUserTableManager.getInstance().getUserByUsername(publishUser.getValue());
-            if(security instanceof SecurityForceUser){
-                createEventController.createNewEvent(((EmergencyCenterUser)loggedInUser),publishTitle.getText(),new UpdateData(publishUpdate.getText()),categoriesToEvent,((SecurityForceUser)security));
+            catch (Exception e){
+                e.printStackTrace();
+                Massage.errorMassage("Bad input");
             }
+        }
+        else{
+            Massage.errorMassage("Only Emergency center user can create an event");
         }
     }
 
